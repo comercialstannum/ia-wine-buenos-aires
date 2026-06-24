@@ -123,9 +123,16 @@ textarea {
   text-decoration: none;
 }
 
-.brand img {
-  width: clamp(128px, 13vw, 168px);
-  height: auto;
+.nav-brands {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 32px);
+}
+
+.nav-brands img {
+  height: clamp(52px, 6vw, 76px);
+  width: auto;
+  object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(197, 139, 49, 0.22));
 }
 
