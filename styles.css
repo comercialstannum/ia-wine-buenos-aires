@@ -533,10 +533,46 @@ h1 {
   opacity: 0.55;
 }
 
-.intro,
 .agenda,
 .invitation {
   background: var(--black);
+}
+
+.intro {
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.97) 0%, rgba(5, 5, 5, 0.9) 46%, rgba(5, 5, 5, 0.4) 74%, rgba(5, 5, 5, 0.22) 100%),
+    url("assets/wine-glass.webp") right center / contain no-repeat,
+    var(--black);
+}
+
+.intro h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.9rem);
+}
+
+.intro .intro-grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: min(58%, 620px);
+  gap: 22px;
+}
+
+.intro .intro-copy {
+  border-left: 0;
+  padding-left: 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 900px) {
+  .intro .intro-grid {
+    max-width: 100%;
+  }
+
+  .intro {
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.95)),
+      url("assets/wine-glass.webp") center / cover no-repeat,
+      var(--black);
+  }
 }
 
 .intro-grid,
