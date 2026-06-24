@@ -702,6 +702,49 @@ h3 {
   padding: 24px;
 }
 
+.partners {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(197, 139, 49, 0.12), transparent 28%),
+    #070707;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(30px, 7vw, 92px);
+  align-items: center;
+}
+
+.partner-logos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.partner-logos article {
+  display: grid;
+  min-height: 230px;
+  place-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    radial-gradient(circle at 50% 42%, rgba(197, 139, 49, 0.14), transparent 60%);
+  padding: 28px;
+}
+
+.partner-logos img {
+  width: min(100%, 260px);
+  max-height: 150px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(197, 139, 49, 0.18));
+}
+
+.partner-logos article:nth-child(2) img {
+  max-height: 176px;
+  width: min(100%, 190px);
+}
+
 .invitation {
   border-top: 1px solid var(--line);
 }
@@ -837,6 +880,7 @@ h3 {
   .intro-grid,
   .agenda-grid,
   .hosts-grid,
+  .partners-grid,
   .invitation-grid {
     grid-template-columns: 1fr;
   }
@@ -950,8 +994,13 @@ h3 {
   .metric-grid,
   .value-grid,
   .question-grid,
+  .partner-logos,
   .host-columns {
     grid-template-columns: 1fr;
+  }
+
+  .partner-logos article {
+    min-height: 190px;
   }
 
   .quick-facts div,
