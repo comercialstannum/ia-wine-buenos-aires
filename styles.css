@@ -129,6 +129,52 @@ textarea {
   filter: drop-shadow(0 0 18px rgba(197, 139, 49, 0.22));
 }
 
+.organizers {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(14px, 2vw, 24px);
+  margin-bottom: clamp(26px, 4vw, 40px);
+}
+
+.organizers-label {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.organizers-logos {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.organizers-logos li {
+  display: flex;
+  align-items: center;
+}
+
+.organizers-logos li + li {
+  border-left: 1px solid var(--line-soft);
+  padding-left: clamp(16px, 2.4vw, 28px);
+}
+
+.organizers-logos img {
+  width: auto;
+  height: clamp(30px, 3.4vw, 40px);
+  object-fit: contain;
+  opacity: 0.92;
+}
+
+.organizers-logos li:last-child img {
+  height: clamp(38px, 4.2vw, 50px);
+}
+
 .nav-links {
   display: flex;
   gap: 8px;
@@ -488,7 +534,6 @@ h1 {
 
 .intro-grid,
 .agenda-grid,
-.hosts-grid,
 .invitation-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -525,7 +570,6 @@ h3 {
 .section-heading p,
 .value-card p,
 .timeline p,
-.host-columns p,
 .invite-copy p,
 .form-note {
   color: var(--muted);
@@ -602,7 +646,6 @@ h3 {
 .value-card,
 .timeline article,
 .question-grid article,
-.host-columns article,
 .lead-form {
   border: 1px solid var(--line-soft);
   border-radius: 4px;
@@ -686,20 +729,6 @@ h3 {
   font-size: 0.96rem;
   font-weight: 900;
   letter-spacing: 0.2em;
-}
-
-.hosts {
-  background: #0c0b0a;
-}
-
-.host-columns {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-
-.host-columns article {
-  padding: 24px;
 }
 
 .partners {
@@ -879,7 +908,6 @@ h3 {
   .hero-grid,
   .intro-grid,
   .agenda-grid,
-  .hosts-grid,
   .partners-grid,
   .invitation-grid {
     grid-template-columns: 1fr;
@@ -994,8 +1022,7 @@ h3 {
   .metric-grid,
   .value-grid,
   .question-grid,
-  .partner-logos,
-  .host-columns {
+  .partner-logos {
     grid-template-columns: 1fr;
   }
 
