@@ -8,15 +8,19 @@
       name="description"
       content="IA & Wine Buenos Aires: encuentro boutique para lideres de empresas sobre inteligencia artificial aplicada a negocios, networking ejecutivo y wine tasting."
     />
-    <link rel="preload" as="image" href="assets/ia-wine-poster-reference.png" />
+    <link rel="preload" as="image" href="assets/ia-wine-poster.webp" fetchpriority="high" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="hero" id="inicio">
       <img
         class="hero-art"
-        src="assets/ia-wine-poster-reference.png"
+        src="assets/ia-wine-poster.webp"
         alt="Visual de IA & Wine Buenos Aires con obelisco, copa de vino y estetica premium"
+        width="1024"
+        height="1536"
+        fetchpriority="high"
+        decoding="async"
       />
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="texture texture-carbon" aria-hidden="true"></div>
@@ -24,7 +28,7 @@
 
       <nav class="nav container" aria-label="Navegacion principal">
         <a class="brand" href="#inicio" aria-label="STANNUM">
-          <img src="assets/stannum-logo-poster.png" alt="STANNUM" />
+          <img src="assets/stannum-logo.webp" alt="STANNUM" width="430" height="270" />
         </a>
         <div class="nav-links">
           <a href="#experiencia">Experiencia</a>
@@ -298,14 +302,22 @@
           <div class="partner-logos" aria-label="Logos de socios del evento">
             <article data-reveal>
               <img
-                src="assets/partner-fudre-wine-club.png"
+                src="assets/partner-fudre-wine-club.webp"
                 alt="FUDRE Wine Club"
+                width="702"
+                height="358"
+                loading="lazy"
+                decoding="async"
               />
             </article>
             <article data-reveal>
               <img
-                src="assets/partner-espacio-sensorium.png"
+                src="assets/partner-espacio-sensorium.webp"
                 alt="Espacio Sensorium"
+                width="432"
+                height="433"
+                loading="lazy"
+                decoding="async"
               />
             </article>
           </div>
