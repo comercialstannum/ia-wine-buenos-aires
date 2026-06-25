@@ -130,10 +130,19 @@ textarea {
 }
 
 .nav-brands img {
-  height: clamp(52px, 6vw, 76px);
+  height: clamp(46px, 5vw, 60px);
   width: auto;
+  max-width: clamp(108px, 13vw, 148px);
   object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(197, 139, 49, 0.22));
+}
+
+.nav-brands img[alt="FUDRE Wine Club"] {
+  height: clamp(38px, 4.2vw, 50px);
+}
+
+.nav-brands img[alt="Espacio Sensorium"] {
+  height: clamp(52px, 5.8vw, 70px);
 }
 
 .organizers {
@@ -670,9 +679,10 @@ h3 {
 }
 
 .value {
+  border-top: 1px solid rgba(197, 139, 49, 0.2);
   background:
-    radial-gradient(circle at 78% 20%, rgba(197, 139, 49, 0.1), transparent 28%),
-    var(--black-2);
+    radial-gradient(circle at 78% 18%, rgba(197, 139, 49, 0.16), transparent 34%),
+    #1a1610;
 }
 
 .section-heading {
@@ -712,6 +722,7 @@ h3 {
 
 .agenda {
   overflow: clip;
+  border-top: 1px solid rgba(197, 139, 49, 0.2);
 }
 
 .sticky-heading {
@@ -745,9 +756,10 @@ h3 {
 }
 
 .conversation {
+  border-top: 1px solid rgba(197, 139, 49, 0.2);
   background:
-    repeating-linear-gradient(90deg, rgba(197, 139, 49, 0.04) 0 1px, transparent 1px 90px),
-    #070707;
+    repeating-linear-gradient(90deg, rgba(197, 139, 49, 0.05) 0 1px, transparent 1px 90px),
+    #181309;
 }
 
 .centered {
@@ -899,6 +911,10 @@ h3 {
 
 .footer-organizers .organizers-logos li:last-child img {
   height: clamp(42px, 4.6vw, 54px);
+}
+
+.footer-organizers .organizers-logos img[alt="FUDRE Wine Club"] {
+  height: clamp(28px, 3vw, 38px);
 }
 
 .footer-grid {
