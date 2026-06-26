@@ -71,7 +71,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#invitacion">Solicitar invitacion</a>
+            <a class="btn btn-primary" href="test.html">Hacer el test y solicitar lugar</a>
             <a class="btn btn-secondary" href="#agenda">Ver agenda</a>
           </div>
         </div>
@@ -292,8 +292,8 @@
             <h2>Solicita tu lugar en IA &amp; Wine Buenos Aires.</h2>
             <p>
               El cupo es limitado para sostener una dinamica de intercambio
-              real. Antes del evento enviaremos un test breve de dominio de IA
-              para adaptar mejor la experiencia.
+              real. El acceso es por diagnostico: completas el Test de Dominio
+              de IA y, al terminar, dejas tus datos para solicitar tu lugar.
             </p>
             <ul class="invite-list">
               <li>Jueves 16 de julio de 2026</li>
@@ -302,40 +302,25 @@
             </ul>
           </div>
 
-          <form class="lead-form" id="lead-form">
-            <label>
-              Nombre y apellido
-              <input type="text" name="name" autocomplete="name" required />
-            </label>
-            <label>
-              Empresa y cargo
-              <input type="text" name="company" autocomplete="organization-title" required />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" autocomplete="email" required />
-            </label>
-            <label>
-              Nivel actual de uso de IA
-              <select name="level" required>
-                <option value="">Seleccionar</option>
-                <option>Exploratorio</option>
-                <option>Uso operativo puntual</option>
-                <option>Procesos ya automatizados</option>
-                <option>Buscando escalar adopcion</option>
-              </select>
-            </label>
-            <label>
-              Que te interesa conversar
-              <textarea name="message" rows="4" required></textarea>
-            </label>
-            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <div class="invite-gate">
+            <p class="eyebrow">Acceso por diagnostico</p>
+            <h3>Primero el test, despues tu lugar.</h3>
+            <p class="gate-p">
+              Hace el Test de Dominio de IA (5 minutos) y recibis tu perfil de
+              madurez al instante. Al terminar dejas tus datos para que el equipo
+              de STANNUM confirme tu lugar.
+            </p>
+            <ul class="gate-list">
+              <li>20 preguntas · ~5 minutos</li>
+              <li>Resultado y perfil de madurez inmediato</li>
+              <li>Tu punto de partida rumbo al evento</li>
+            </ul>
+            <a class="btn btn-primary" href="test.html">Hacer el test y solicitar mi lugar →</a>
             <p class="form-note">
-              Tambien podes escribir a
+              Consultas:
               <a href="mailto:comercial@stannum.com.ar">comercial@stannum.com.ar</a>.
             </p>
-          </form>
+          </div>
         </div>
       </section>
     </main>

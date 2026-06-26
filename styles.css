@@ -871,6 +871,56 @@ h3 {
   width: fit-content;
 }
 
+.invite-gate {
+  align-self: center;
+  border: 1px solid rgba(197, 139, 49, 0.38);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+  padding: clamp(26px, 4vw, 40px);
+}
+
+.invite-gate h3 {
+  margin: 6px 0 14px;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.invite-gate .gate-p {
+  margin-bottom: 22px;
+}
+
+.gate-list {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.gate-list li {
+  position: relative;
+  color: var(--silver);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  padding-left: 24px;
+}
+
+.gate-list li::before {
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--gold);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.invite-gate .btn-primary {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
 .form-status {
   margin: 0;
   font-size: 0.95rem;
