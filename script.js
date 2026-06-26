@@ -29,7 +29,7 @@ if (leadForm) {
       ].join("\n")
     );
 
-    window.location.href = `mailto:hola@stannum.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:comercial@stannum.com.ar?subject=${subject}&body=${body}`;
   });
 }
 
