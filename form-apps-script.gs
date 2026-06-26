@@ -19,7 +19,7 @@
  */
 
 const DESTINO_EMAIL = "comercial@stannum.com.ar";
-const SHEET_ID = ""; // opcional: ID de una Google Sheet para registrar cada participante
+const SHEET_ID = "1B8VoteTnaDtwWFFB5qGnDDUtvTajNiyUIpmaFEBCHdM"; // Sheet "IA & Wine — Leads (Test de Dominio IA)"
 
 // Etiquetas legibles para el mail (las claves que manda test.html)
 const LABELS = {

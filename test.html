@@ -228,6 +228,7 @@ const LEVELS = [
 // ====================== ESTADO ======================
 const answers = {};
 let step = -1;
+let submitted = false;
 const app = document.getElementById('app');
 const progressBar = document.getElementById('progressBar');
 const scoreLive = document.getElementById('scoreLive');
@@ -343,7 +344,7 @@ function goBack(){ if(step>0){ step--; render(); } else { step=-1; render(); } }
 function renderCalc(){
   app.innerHTML = `<section class="stage calc fade"><div class="ring"></div><h2>Procesando tu diagnóstico…</h2><p>Calibrando tu nivel de dominio de IA</p></section>`;
   progressBar.style.width='100%';
-  submit();
+  submitted = submit();
   setTimeout(renderResult, 1500);
 }
 
@@ -352,7 +353,12 @@ function renderResult(){
   const lv = levelFor(score);
   const name = (answers.name||'').split(/\s+/)[0]||'';
   let cta;
-  if(CONFIG.WHATSAPP){
+  if(!submitted){
+    // Sin backend configurado: fallback a mail para no perder el lead.
+    const subj = encodeURIComponent(`Solicitud IA & Wine — ${answers.name||''} (${answers.company||''})`);
+    const bd = encodeURIComponent(`Nombre: ${answers.name||''}\nEmpresa: ${answers.company||''}\nRol: ${answers.role||''}\nEmail: ${answers.email||''}\nWhatsApp: ${answers.phone||''}\nNivel: ${lv.name} (${score}/100)`);
+    cta = `<a class="wa-btn" href="mailto:${CONFIG.EMAIL}?subject=${subj}&body=${bd}">Enviar mi solicitud por mail →</a>`;
+  } else if(CONFIG.WHATSAPP){
     const msg = encodeURIComponent(`Hola STANNUM, soy ${answers.name||''} (${answers.company||''}). Hice el Test de Dominio IA, nivel ${lv.name} (${score}/100). Quiero solicitar mi lugar en ${CONFIG.EVENT}.`);
     cta = `<a class="wa-btn" href="https://wa.me/${CONFIG.WHATSAPP}?text=${msg}" target="_blank" rel="noopener">Confirmar mi lugar por WhatsApp →</a>`;
   } else {
@@ -426,7 +432,9 @@ function submit(){
   }catch(e){}
   if(CONFIG.APPS_SCRIPT_URL){
     fetch(CONFIG.APPS_SCRIPT_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(payload)}).catch(()=>{});
+    return true;
   }
+  return false;
 }
 
 // ====================== UTILS ======================
