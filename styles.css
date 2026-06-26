@@ -871,6 +871,25 @@ h3 {
   width: fit-content;
 }
 
+.form-status {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status.is-ok {
+  color: var(--gold-soft);
+}
+
+.form-status.is-error {
+  color: #e7a3a3;
+}
+
 .form-note {
   margin: 0;
   font-size: 0.92rem;
