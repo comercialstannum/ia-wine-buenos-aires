@@ -23,11 +23,13 @@ const SHEET_ID = ""; // opcional: ID de una Google Sheet para registrar cada par
 
 // Etiquetas legibles para el mail (las claves que manda test.html)
 const LABELS = {
-  name:"Nombre", company:"Empresa y cargo", email:"Email", phone:"WhatsApp",
-  area:"Área", exp:"Experiencia", reportan:"Personas a cargo",
-  tools:"Herramientas que usa/conoce", tareas:"Tareas con IA", barrera:"Principal barrera",
-  problema:"Problema a resolver con IA", preocup:"Mayor preocupación", formacion:"Tiempo para formación",
-  score:"Score (0-100)", levelName:"Nivel de madurez", solution:"Solución recomendada",
+  name:"Nombre", company:"Empresa", role:"Rol / función", email:"Email", phone:"WhatsApp",
+  team:"Tamaño del equipo", time:"Distribución del tiempo",
+  freq:"Frecuencia de uso de IA", plats:"Plataformas que usa", pago:"¿Paga por IA?",
+  areas:"Áreas donde usa IA", reaccion:"Método ante un mal output", integracion:"Integración en el equipo",
+  funciones:"Funciones avanzadas", conceptos:"Conceptos familiares", aprender:"Qué quiere aprender",
+  autonivel:"Autopercepción de nivel",
+  score:"Score (0-100)", levelName:"Nivel de dominio", solution:"Solución recomendada",
   event:"Evento", date:"Fecha", source:"Origen", levelN:"Nivel (n°)", id:"ID"
 };
 
@@ -43,9 +45,9 @@ function doPost(e) {
     };
 
     // Orden de campos en el mail
-    const orden = ["name","company","email","phone","score","levelName","solution",
-      "area","exp","reportan","tools","tareas","barrera","problema","preocup","formacion",
-      "event","date","source"];
+    const orden = ["name","company","role","email","phone","score","levelName","solution",
+      "team","time","freq","plats","pago","areas","reaccion","integracion",
+      "funciones","conceptos","aprender","autonivel","event","date","source"];
     const cuerpo = ["Nueva solicitud — IA & Wine Buenos Aires (Test de Dominio IA)", ""]
       .concat(orden.map(linea).filter(Boolean))
       .join("\n");
@@ -61,10 +63,9 @@ function doPost(e) {
     if (SHEET_ID) {
       const hoja = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
       hoja.appendRow([
-        new Date(), d.name||"", d.company||"", d.email||"", d.phone||"",
+        new Date(), d.name||"", d.company||"", d.role||"", d.email||"", d.phone||"",
         d.score!=null?d.score:"", d.levelName||"", d.solution||"",
-        d.area||"", (d.tools||[]).join(", "), (d.tareas||[]).join(", "),
-        d.barrera||"", d.problema||"", d.preocup||"", d.formacion||""
+        d.team||"", d.freq||"", d.pago||"", d.reaccion||"", d.integracion||"", d.autonivel||""
       ]);
     }
 
