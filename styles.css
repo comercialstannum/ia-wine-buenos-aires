@@ -801,36 +801,33 @@ h3 {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   gap: clamp(28px, 5vw, 64px);
-  align-items: center;
+  align-items: stretch;
 }
 
-.host-photo,
-.host-photo-img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
+.host-photo-wrap {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 14px;
-  overflow: hidden;
-}
-
-.host-photo {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(197, 139, 49, 0.12), transparent 60%),
-    linear-gradient(160deg, #181410, #0a0908);
-}
-
-.host-photo .ph {
-  color: var(--muted);
-  font-size: 0.82rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  background: linear-gradient(160deg, #181410, #0a0908);
+  min-height: 360px;
 }
 
 .host-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: 50% 22%;
   display: block;
+}
+
+@media (max-width: 1040px) {
+  .host-photo-wrap {
+    aspect-ratio: 4 / 5;
+    min-height: 0;
+  }
 }
 
 .host-role {
