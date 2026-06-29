@@ -1170,12 +1170,13 @@ h3 {
 
   .nav-links {
     width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    flex-wrap: wrap;
   }
 
   .nav-links a {
     flex: 0 0 auto;
+    font-size: 0.74rem;
+    padding: 10px 16px;
   }
 
   .hero-grid {
