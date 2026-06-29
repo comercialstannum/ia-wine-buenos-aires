@@ -1015,9 +1015,12 @@ h3 {
   transform: rotate(45deg);
 }
 
-.invite-gate .btn-primary {
+.invite-gate .btn {
   width: 100%;
-  margin-bottom: 16px;
+}
+
+.invite-gate .btn-primary {
+  margin-bottom: 12px;
 }
 
 .privacy-note {
