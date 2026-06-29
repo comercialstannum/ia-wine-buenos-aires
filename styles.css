@@ -924,6 +924,12 @@ h3 {
   margin-bottom: 16px;
 }
 
+.privacy-note {
+  font-size: 0.8rem;
+  opacity: 0.65;
+  margin-top: 6px;
+}
+
 .form-status {
   margin: 0;
   font-size: 0.95rem;
