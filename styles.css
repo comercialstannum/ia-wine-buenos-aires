@@ -221,9 +221,9 @@ textarea {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.62fr);
   gap: clamp(28px, 7vw, 96px);
-  align-items: end;
+  align-items: start;
   min-height: calc(100svh - 76px);
-  padding: 20px 0 34px;
+  padding: 24px 0 40px;
 }
 
 .hero-copy {
@@ -423,8 +423,9 @@ h1 {
 
 .quick-facts div {
   display: grid;
-  gap: 12px;
+  gap: 26px;
   justify-items: center;
+  align-content: start;
   border-left: 1px solid var(--line);
   padding: 0 10px;
   text-align: center;
