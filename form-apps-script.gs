@@ -137,7 +137,9 @@ function doPost(e) {
 function doGet(e) {
   var out = { ok:true, total:0, avgScore:0,
     levels:{ "Principiante":0, "Intermedio":0, "Avanzado":0, "Experto":0 },
+    freq:{}, integ:{}, self:{}, pay:{ "Sí":0, "No":0 },
     updated:new Date().toISOString() };
+  function inc(o,k){ k=(k||"").toString().trim(); if(k) o[k]=(o[k]||0)+1; }
   try {
     if (SHEET_ID) {
       var rows = SpreadsheetApp.openById(SHEET_ID).getSheets()[0].getDataRange().getValues();
@@ -149,6 +151,11 @@ function doGet(e) {
         var score = Number(rows[i][6])||0;
         var lvl = (rows[i][7]||"").toString().trim();
         if (out.levels[lvl] !== undefined) out.levels[lvl]++;
+        inc(out.freq, rows[i][10]);             // Frecuencia de uso de IA
+        inc(out.integ, rows[i][13]);            // Integración en el equipo
+        inc(out.self, rows[i][14]);             // Autopercepción de nivel
+        var paga = (rows[i][11]||"").toString(); // ¿Paga IA?
+        if (/^s/i.test(paga)) out.pay["Sí"]++; else if (paga) out.pay["No"]++;
         sum += score; n++;
       }
       out.total = n;
