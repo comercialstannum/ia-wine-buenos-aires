@@ -92,6 +92,7 @@ function resultEmailHtml(name, score, lv){
 function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
+    if (d.type === "feedback") return handleFeedback(d);   // encuesta post-evento
     const score = Number(d.score)||0;
     const lv = levelFor(score);
 
@@ -133,8 +134,62 @@ function doPost(e) {
   }
 }
 
+// ====================== FEEDBACK POST-EVENTO ======================
+function handleFeedback(d) {
+  try {
+    if (SHEET_ID) {
+      var ss = SpreadsheetApp.openById(SHEET_ID);
+      var sh = ss.getSheetByName("Feedback");
+      if (!sh) {
+        sh = ss.insertSheet("Feedback");
+        sh.appendRow(["Fecha","Evento","Nombre","Email","Experiencia (1-5)","Contenido (1-5)",
+          "Dinámica (1-5)","Objetivo (1-5)","NPS (0-10)","Lo más valioso","A mejorar"]);
+      }
+      sh.appendRow([ new Date(), d.event||"", d.name||"", d.email||"",
+        d.exp||"", d.content||"", d.dynamic||"", d.objective||"", d.nps||"",
+        d.valuable||"", d.improve||"" ]);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ ok:true })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ ok:false, error:String(err) })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Agregados de feedback para dashboard (mode=feedback) — sin datos personales
+function feedbackStats(e) {
+  var out = { ok:true, total:0, nps:0, promoters:0, passives:0, detractors:0,
+    avgExp:0, avgContent:0, avgDynamic:0, avgObjective:0, comments:[],
+    updated:new Date().toISOString() };
+  try {
+    if (SHEET_ID) {
+      var ss = SpreadsheetApp.openById(SHEET_ID);
+      var sh = ss.getSheetByName("Feedback");
+      if (sh) {
+        var r = sh.getDataRange().getValues();
+        var se=0,sc=0,sd=0,so=0,sn=0,n=0;
+        for (var i=1;i<r.length;i++){
+          if(!r[i][2] && !r[i][3]) continue; // fila vacía
+          se+=Number(r[i][4])||0; sc+=Number(r[i][5])||0; sd+=Number(r[i][6])||0; so+=Number(r[i][7])||0;
+          var nps=Number(r[i][8]); if(!isNaN(nps)){ sn+=nps; if(nps>=9)out.promoters++; else if(nps>=7)out.passives++; else out.detractors++; }
+          if(r[i][9]||r[i][10]) out.comments.push({ v:(r[i][9]||"").toString(), m:(r[i][10]||"").toString() });
+          n++;
+        }
+        out.total=n;
+        if(n){ out.avgExp=+(se/n).toFixed(1); out.avgContent=+(sc/n).toFixed(1); out.avgDynamic=+(sd/n).toFixed(1); out.avgObjective=+(so/n).toFixed(1);
+               out.nps=Math.round((out.promoters-out.detractors)/n*100); }
+      }
+    }
+  } catch (err) { out.ok=false; out.error=String(err); }
+  var json = JSON.stringify(out);
+  var cb = e && e.parameter && e.parameter.callback;
+  if (cb) return ContentService.createTextOutput(cb+"("+json+")").setMimeType(ContentService.MimeType.JAVASCRIPT);
+  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
 // ====================== DASHBOARD PÚBLICO (solo agregados, sin datos personales) ======================
 function doGet(e) {
+  var mode = e && e.parameter && e.parameter.mode;
+  if (mode === "feedback") return feedbackStats(e);
   var out = { ok:true, total:0, avgScore:0,
     levels:{ "Principiante":0, "Intermedio":0, "Avanzado":0, "Experto":0 },
     freq:{}, integ:{}, self:{}, pay:{ "Sí":0, "No":0 },
