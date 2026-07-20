@@ -18,6 +18,7 @@
 const DESTINO_EMAIL = "comercial@stannum.com.ar";
 const SHEET_ID = "1B8VoteTnaDtwWFFB5qGnDDUtvTajNiyUIpmaFEBCHdM"; // Sheet "IA & Wine — Leads (Test de Dominio IA)"
 const EVENT = "IA & Wine Buenos Aires";
+const FEEDBACK_URL = "https://ia-wine-buenos-aires.vercel.app/feedback.html";
 
 // Niveles (mismos que el test) — fuente del copy del mail
 const LEVELS = [
@@ -222,6 +223,62 @@ function doGet(e) {
   var cb = e && e.parameter && e.parameter.callback;
   if (cb) return ContentService.createTextOutput(cb+"("+json+")").setMimeType(ContentService.MimeType.JAVASCRIPT);
   return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+}
+
+// ====================== ENVÍO DE INVITACIÓN AL FEEDBACK ======================
+// Mail brandeado con el link de feedback.
+function feedbackInviteHtml(name){
+  var first = (name||"").split(/\s+/)[0] || "";
+  return `
+  <div style="background:#050505;margin:0;padding:0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#050505;">
+      <tr><td align="center" style="padding:30px 14px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#0b0b0a;border:1px solid rgba(197,139,49,.30);border-radius:14px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;">
+          <tr><td style="padding:26px 32px;border-bottom:1px solid rgba(197,139,49,.22);">
+            <div style="font-size:11px;letter-spacing:3px;color:#9a9286;text-transform:uppercase;">STANNUM</div>
+            <div style="font-size:25px;font-weight:bold;color:#f2eee6;letter-spacing:1px;margin-top:8px;">IA <span style="color:#c58b31;">&amp;</span> WINE <span style="color:#c58b31;">BUENOS AIRES</span></div>
+          </td></tr>
+          <tr><td style="padding:32px;">
+            <p style="color:#f2eee6;font-size:16px;margin:0 0 10px;">Hola ${first},</p>
+            <p style="color:#c9c1b3;font-size:15px;line-height:1.7;margin:0 0 22px;">Gracias por haber sido parte de <b style="color:#f2eee6;">IA &amp; Wine Buenos Aires</b>. Tu mirada nos ayuda a que la próxima edición sea aún mejor.</p>
+            <p style="color:#c9c1b3;font-size:15px;line-height:1.7;margin:0 0 28px;">¿Nos dejás tu feedback? Son 2 minutos.</p>
+            <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:999px;background:#c58b31;">
+              <a href="${FEEDBACK_URL}" style="display:inline-block;padding:15px 40px;color:#1a1206;font-weight:bold;font-size:15px;letter-spacing:.06em;text-decoration:none;text-transform:uppercase;">Dejar mi feedback →</a>
+            </td></tr></table>
+            <p style="color:#6b6359;font-size:12px;margin:28px 0 0;">O copiá este link: ${FEEDBACK_URL}</p>
+          </td></tr>
+          <tr><td style="padding:20px 32px;border-top:1px solid rgba(255,255,255,.08);">
+            <div style="color:#6b6359;font-size:12px;">STANNUM · <a href="mailto:comercial@stannum.com.ar" style="color:#9a8a63;text-decoration:none;">comercial@stannum.com.ar</a></div>
+          </td></tr>
+        </table>
+      </td></tr>
+    </table>
+  </div>`;
+}
+
+// ▶ Ejecutar UNA vez desde el editor. Manda el mail a todos los que hicieron el test.
+function enviarFeedback(){
+  if(!SHEET_ID) return;
+  var rows = SpreadsheetApp.openById(SHEET_ID).getSheets()[0].getDataRange().getValues();
+  var seen = {}, enviados = 0;
+  for(var i=1;i<rows.length;i++){
+    var name  = (rows[i][1]||"").toString().trim();
+    var email = (rows[i][4]||"").toString().trim();
+    if(!email || !/.+@.+\..+/.test(email)) continue;   // email inválido
+    if(/^prueba/i.test(name)) continue;                // filas de prueba
+    if(seen[email.toLowerCase()]) continue;            // sin duplicados
+    seen[email.toLowerCase()] = true;
+    MailApp.sendEmail({
+      to: email,
+      subject: "¿Cómo viviste IA & Wine Buenos Aires? (2 min)",
+      htmlBody: feedbackInviteHtml(name),
+      name: "STANNUM · IA & Wine",
+      replyTo: DESTINO_EMAIL
+    });
+    enviados++;
+    Utilities.sleep(300);
+  }
+  Logger.log("Feedback enviado a " + enviados + " participantes");
 }
 
 // ====================== TEST (correlo desde el editor: ▶ con "testEmail") ======================
