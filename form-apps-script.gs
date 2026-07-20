@@ -281,7 +281,8 @@ function enviarFeedback(){
   Logger.log("Feedback enviado a " + enviados + " participantes");
 }
 
-// ====================== TEST (correlo desde el editor: ▶ con "testEmail") ======================
+// ====================== TESTS (correlos desde el editor: ▶) ======================
+// Mail del diagnóstico (test) a tu casilla.
 function testEmail() {
   var score = 72;
   var lv = levelFor(score);
@@ -289,6 +290,17 @@ function testEmail() {
     to: DESTINO_EMAIL,
     subject: "[PRUEBA] Tu diagnóstico de dominio IA · " + EVENT,
     htmlBody: resultEmailHtml("Carlos Ponte", score, lv),
+    name: "STANNUM · IA & Wine",
+    replyTo: DESTINO_EMAIL
+  });
+}
+
+// Mail de invitación al FEEDBACK, solo a tu casilla (para revisar antes de enviar a todos).
+function testFeedbackMail() {
+  MailApp.sendEmail({
+    to: DESTINO_EMAIL,
+    subject: "[PRUEBA] ¿Cómo viviste IA & Wine Buenos Aires? (2 min)",
+    htmlBody: feedbackInviteHtml("Carlos"),
     name: "STANNUM · IA & Wine",
     replyTo: DESTINO_EMAIL
   });
