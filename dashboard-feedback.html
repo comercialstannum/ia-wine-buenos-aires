@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Feedback · IA &amp; Wine Buenos Aires — STANNUM</title>
+<meta name="theme-color" content="#050505" />
+<meta name="robots" content="noindex" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#050505;--gold:#c58b31;--gold-soft:#f1c56d;--champagne:#f2eee6;--silver:#d8d8d8;--muted:#9a9286;
+--green:#46d27a;--red:#e07a7a;--line:rgba(197,139,49,.28);--line-soft:rgba(255,255,255,.09);
+--fd:"Arial Narrow","Roboto Condensed","Segoe UI",Arial,sans-serif;--fb:"Segoe UI",Arial,sans-serif;}
+body{background:var(--black);color:var(--champagne);font-family:var(--fb);min-height:100vh;overflow-x:hidden;line-height:1.5}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:linear-gradient(rgba(197,139,49,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(197,139,49,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 80%)}
+.glow{position:fixed;top:-220px;left:50%;transform:translateX(-50%);width:640px;height:640px;z-index:0;pointer-events:none;background:radial-gradient(circle,rgba(197,139,49,.14),transparent 64%)}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(30px,5vw,58px) 22px}
+.head{text-align:center;margin-bottom:32px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:8px 18px;margin-bottom:18px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:var(--fd);font-weight:900;font-size:clamp(30px,5.4vw,54px);text-transform:uppercase;line-height:1}
+h1 .hl{color:var(--gold)}
+.sub{color:var(--muted);font-size:14px;margin-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.kpi{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));padding:24px 18px;text-align:center}
+.kpi .n{font-family:var(--fd);font-weight:900;font-size:clamp(38px,7vw,66px);line-height:.9;color:var(--gold-soft)}
+.kpi .n.pos{color:var(--green)} .kpi .n.neg{color:var(--red)}
+.kpi .l{font-size:11px;letter-spacing:.14em;color:var(--silver);text-transform:uppercase;margin-top:10px}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));padding:26px}
+.panel.full{grid-column:1/-1}
+.panel-k{font-size:11px;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:20px}
+.rate{margin-bottom:16px}
+.rate .rl{display:flex;justify-content:space-between;font-size:14px;color:var(--champagne);margin-bottom:6px}
+.rate .rl b{font-family:var(--fd);font-weight:900;font-size:18px;color:var(--gold-soft)}
+.track{height:10px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#b97921,var(--gold-soft));border-radius:99px;width:0;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.nps-split{display:flex;height:14px;border-radius:99px;overflow:hidden;margin-bottom:10px}
+.nps-split i{height:100%}
+.nps-split .p{background:var(--green)} .nps-split .n2{background:#8a8578} .nps-split .d{background:var(--red)}
+.nps-legend{display:flex;gap:16px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.comments{display:grid;gap:10px;max-height:340px;overflow:auto}
+.cmt{border-left:2px solid var(--gold);padding:4px 0 4px 14px;font-size:14px;color:#ddd6c9;line-height:1.5}
+.empty{color:var(--muted);font-size:14px;padding:14px 0}
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+.foot a{color:var(--gold-soft);text-decoration:none}
+@media(max-width:720px){.kpis{grid-template-columns:1fr}.panels{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="glow"></div>
+<main class="wrap">
+  <div class="head">
+    <div class="eyebrow"><span class="live-dot"></span> Feedback en vivo · uso interno</div>
+    <h1>Qué dijeron de <span class="hl">IA &amp; Wine</span></h1>
+    <p class="sub">Encuesta post-evento — IA &amp; Wine Buenos Aires</p>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="panels">
+    <div class="panel"><div class="panel-k">Valoraciones promedio (1-5)</div><div id="rates"><div class="empty">Cargando…</div></div></div>
+    <div class="panel"><div class="panel-k">NPS — Recomendación</div><div id="npsbox"></div></div>
+    <div class="panel full"><div class="panel-k">Lo más valioso</div><div class="comments" id="c_val"></div></div>
+    <div class="panel full"><div class="panel-k">A mejorar</div><div class="comments" id="c_imp"></div></div>
+  </div>
+
+  <div class="foot">Actualizado <span id="updated">—</span> · Fuente: STANNUM · <a href="index.html">Volver a IA &amp; Wine</a></div>
+</main>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjr2OHjZAgLhbXpI07Flh2zWN1bfWlx1XmxdVgUA6JEcID_jZrCP0agNLECH1BqQ/exec";
+function load(){
+  const cb="fb_"+Date.now(); const s=document.createElement("script");
+  window[cb]=(d)=>{ try{ render(d); }finally{ delete window[cb]; s.remove(); } };
+  s.onerror=()=>{ delete window[cb]; s.remove(); };
+  s.src=APPS_SCRIPT_URL+"?mode=feedback&callback="+cb+"&t="+Date.now();
+  document.body.appendChild(s);
+}
+function render(d){
+  if(!d||d.ok===false) return;
+  const total=d.total||0;
+  const npsCls = d.nps>0?'pos':(d.nps<0?'neg':'');
+  document.getElementById("kpis").innerHTML=[
+    {n:total,l:"Respuestas",c:""},
+    {n:(d.nps>0?'+':'')+(d.nps||0),l:"NPS",c:npsCls},
+    {n:(d.avgExp||0),l:"Experiencia (prom /5)",c:""}
+  ].map(k=>`<div class="kpi"><div class="n ${k.c}">${k.n}</div><div class="l">${k.l}</div></div>`).join("");
+
+  const rates=[["Experiencia",d.avgExp],["Contenido",d.avgContent],["Dinámica",d.avgDynamic],["Objetivo",d.avgObjective]];
+  document.getElementById("rates").innerHTML = total? rates.map(([l,v])=>{
+    v=v||0; const pct=Math.round(v/5*100);
+    return `<div class="rate"><div class="rl"><span>${l}</span><b>${v.toFixed(1)}</b></div><div class="track"><div class="fill" data-w="${pct}"></div></div></div>`;
+  }).join("") : '<div class="empty">Todavía sin respuestas.</div>';
+
+  const pr=d.promoters||0,pa=d.passives||0,de=d.detractors||0, tt=pr+pa+de;
+  document.getElementById("npsbox").innerHTML = tt? `
+    <div class="nps-split">
+      <i class="p" style="width:${pr/tt*100}%"></i><i class="n2" style="width:${pa/tt*100}%"></i><i class="d" style="width:${de/tt*100}%"></i>
+    </div>
+    <div class="nps-legend">
+      <span><span class="dot" style="background:var(--green)"></span>Promotores ${pr}</span>
+      <span><span class="dot" style="background:#8a8578"></span>Neutrales ${pa}</span>
+      <span><span class="dot" style="background:var(--red)"></span>Detractores ${de}</span>
+    </div>` : '<div class="empty">Todavía sin respuestas.</div>';
+
+  const cmts=d.comments||[];
+  const val=cmts.map(c=>c.v).filter(Boolean);
+  const imp=cmts.map(c=>c.m).filter(Boolean);
+  document.getElementById("c_val").innerHTML = val.length? val.map(t=>`<div class="cmt">${esc(t)}</div>`).join("") : '<div class="empty">Sin comentarios aún.</div>';
+  document.getElementById("c_imp").innerHTML = imp.length? imp.map(t=>`<div class="cmt">${esc(t)}</div>`).join("") : '<div class="empty">Sin comentarios aún.</div>';
+
+  document.getElementById("updated").textContent = "a las " + new Date(d.updated||Date.now()).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit"});
+  requestAnimationFrame(()=>setTimeout(()=>{document.querySelectorAll(".fill").forEach(b=>b.style.width=b.getAttribute("data-w")+"%");},90));
+}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+load();
+setInterval(load, 300000); // 5 min
+</script>
+</body>
+</html>
